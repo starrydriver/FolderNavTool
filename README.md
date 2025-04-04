@@ -1,8 +1,14 @@
-# 文件夹快速导航工具
 <p align="center">
+  简体中文
+  ｜
+  <a href="https://github.com/krahets/hello-algo/blob/main/zh-hant/README.md">繁體中文</a>
+  ｜
+  <a href="https://github.com/krahets/hello-algo/blob/main/en/README.md">English</a>
+</p>
+
+# 文件夹快速导航工具
 ## 当前状态
 🚧 待完成
-
 ## 开发历程
 **4月3日-4月4日**  
 🔥 拼尽全力无法隐藏横向滑动栏  
