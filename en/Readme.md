@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://github.com/starrydriver/FolderNavTool/blob/master/Readme.md">Chinese</a>
+  ｜
+  English
+</p>
+
 # Folder Quick Navigation Tool
 
 ## Current Status
