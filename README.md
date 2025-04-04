@@ -1,4 +1,4 @@
-```html
+
 <style>
   .lang-switcher {
     text-align: right;
@@ -23,7 +23,7 @@
     opacity: 0.8;
   }
 </style>
-
+```html
 <div class="lang-switcher">
   <button class="lang-btn active" onclick="switchLang('zh')">中文</button>
   <button class="lang-btn" onclick="switchLang('en')">English</button>
@@ -74,7 +74,7 @@ Then spent half a day wrestling with MVVM architecture
 Successfully completed UI redesign  
 Interactive features remain at a standstill 😆
 </div>
-
+```
 <script>
 function switchLang(lang) {
   // Toggle content visibility
@@ -101,4 +101,4 @@ document.addEventListener('DOMContentLoaded', function() {
   switchLang(lang);
 });
 </script>
-```
+
