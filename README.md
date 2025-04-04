@@ -1,7 +1,7 @@
 <p align="center">
   Chinese
   ｜
-  <a href="https://github.com/krahets/hello-algo/blob/main/en/README.md">English</a>
+  <a href="https://github.com/starrydriver/FolderNavTool/blob/master/en/Readme.md">English</a>
 </p>
 
 # 文件夹快速导航工具
