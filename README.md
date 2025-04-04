@@ -1,5 +1,5 @@
 <p align="center">
-  简体中文
+  Chinese
   ｜
   <a href="https://github.com/krahets/hello-algo/blob/main/en/README.md">English</a>
 </p>
