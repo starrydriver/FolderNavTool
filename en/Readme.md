@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/starrydriver/FolderNavTool/blob/master/Readme.md">Chinese</a>
+  <a href="https://github.com/starrydriver/FolderNavTool/blob/master/README.md">Chinese</a>
   ｜
   English
 </p>
