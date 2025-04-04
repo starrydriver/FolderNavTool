@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FloderNavTool.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:nav="clr-namespace:FloderNavTool;assembly=FloderNavTool"
+        x:Class="FloderNavTool.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="文件夹导航"
+		Width="600"
+		Height="400"
+		CanResize="False"
+        WindowStartupLocation="CenterScreen">
+
+	<StackPanel Spacing="15">
+		<StackPanel Orientation="Horizontal" Margin="15" Spacing="15">
+			<TextBox Text="{Binding FolderPath}" Watermark="{Binding MyMark}" Width="300"></TextBox>
+			<Button Command="{Binding SearchFolderFileCommand}" Content="Search🔍" Width="80" />
+			<Button Command="{Binding AddFolderFileCommand}" Content="Add➕"  Width="80" />
+	    </StackPanel>
+		
+		<Grid  Margin="15" >
+			<!-- 定义两行四列的网格 -->
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<ItemsControl ItemsSource="{Binding NavItems}" Grid.RowSpan="2" Grid.ColumnSpan="4">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<UniformGrid Rows="2" Columns="4"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<nav:NavItem/>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</Grid>
+	</StackPanel>
+</Window>

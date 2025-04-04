@@ -1,0 +1,74 @@
+# Eto.Forms 项目专用 .gitignore
+# 适用于 C# + 跨平台桌面应用开发
+
+### Visual Studio 必备 ###
+## 忽略编译生成文件
+[Bb]in/
+[Oo]bj/
+[Tt]est[Rr]esult*/
+
+## 忽略用户特定文件
+*.user
+*.suo
+*.userprefs
+*.userosscache
+*.sln.docstates
+
+## 忽略项目缓存文件
+.vs/
+.vscode/
+.ionide/
+*.swp
+
+### 运行时文件 ###
+## 忽略本地调试文件
+*.pdb
+*.ilk
+*.cache
+*.exe
+*.dll
+*.config
+*.manifest
+
+## 忽略日志文件
+*.log
+*.tlog
+*.tmp
+
+### 跨平台相关 ###
+# macOS 系统文件
+.DS_Store
+._*
+
+# Windows 系统文件
+Thumbs.db
+Desktop.ini
+
+# Linux 隐藏文件
+.*.sw?
+*~
+
+### 项目特殊配置 ###
+# 忽略 Eto 平台缓存
+packages/
+.mono/
+.addins
+
+# 忽略本地测试数据
+TestData/
+/local_settings.json
+
+### 开发环境 ###
+# Rider IDE
+.idea/
+*.sln.iml
+
+# VS Code
+.history/
+*.code-workspace
+
+# 编译中间文件
+*.aps
+*.ncb
+*.opensdf
+*.sdf
