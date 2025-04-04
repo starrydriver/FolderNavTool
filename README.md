@@ -1,9 +1,4 @@
-```html
-<!-- 切换按钮 -->
-<div style="text-align: right; margin-bottom: 20px;">
-  <button onclick="switchLang('zh')">中文</button>
-  <button onclick="switchLang('en')">English</button>
-</div>
+<button type="button">点击我！</button>
 
 <!-- 中英文内容容器 -->
 <div id="zh-content">
