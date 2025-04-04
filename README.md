@@ -1,26 +1,20 @@
-<button type="button">点击我！</button>
+# 文件夹快速导航工具
 
-<!-- 中英文内容容器 -->
-<div id="zh-content">
-  ## 文件夹快速导航工具
-  - 4月3日-4月4日：与横向滚动条搏斗未果
-  - 连夜迁移至 Avalonia 框架
-  - MVVM 模式初战告捷
-</div>
+## 当前状态
+🚧 待完成
 
-<div id="en-content" style="display: none;">
-  ## Folder Navigation Tool
-  - Apr 3-4: Failed to hide horizontal scrollbar
-  - Switched to Avalonia overnight
-  - First victory with MVVM pattern
-</div>
+## 开发历程
+**4月3日-4月4日**  
+🔥 拼尽全力无法隐藏横向滑动栏  
 
-<script>
-function switchLang(lang) {
-  document.getElementById('zh-content').style.display = 
-    lang === 'zh' ? 'block' : 'none';
-  document.getElementById('en-content').style.display = 
-    lang === 'en' ? 'block' : 'none';
-}
-</script>
-```
+面对仅仅数百kb的轻量级，顽固不堪的滚动条问题令人身心俱疲  
+
+🌙 连夜更换框架  
+
+连夜转到 Avalonia 框架  
+然后耗时半日陷入与 MVVM 架构"搏斗"  
+
+🎉 最终成果  
+
+成功完成 UI 界面重构  
+交互功能依旧停滞不前😆
