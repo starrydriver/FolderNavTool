@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		     xmlns:vm="using:FloderNavTool.ViewModels"
+			 x:DataType="vm:SettingsWindowViewModel"
+		     Width="300" Height="180"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="180"
+			 Icon="/Assets/avalonia-logo.ico"
+		     Title="Settings"
+             x:Class="FloderNavTool.SettingsWindow"
+		     CanResize="False"
+             WindowStartupLocation="CenterScreen">
+	<StackPanel  Margin="30" Spacing="20">
+		<StackPanel Orientation="Horizontal">
+			<TextBlock Margin="0,5,0,0">Folder Name:</TextBlock>
+			<TextBox Text="{Binding	FolderNameSetting}" Width="150"></TextBox>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal">
+			<TextBlock Margin="0,5,10,0">Folder Path:</TextBlock>
+			<TextBox Text="{Binding	FolderPathSetting}" Width="150"></TextBox>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" Spacing="20">
+			<Button  Command="{Binding ModifyNavCommand}" Content="Modify🪛"  HorizontalContentAlignment="Center" Width="110" />
+			<Button  Content="Delete🗑"  HorizontalContentAlignment="Center" Background="#F3B5BE" Width="110" />
+		</StackPanel>
+	</StackPanel>
+</Window>

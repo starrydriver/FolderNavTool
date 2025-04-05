@@ -2,10 +2,9 @@
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 namespace FloderNavTool.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -15,7 +14,7 @@ namespace FloderNavTool.ViewModels
         {
             _mainWindow = mainWindow;
         }
-        private int _currentIndex = 0;
+        private int idCount = 1;
         public int RowIndex { get; set; }
         public int ColumnIndex { get; set; }
         public ObservableCollection<NavItemViewModel> NavItems { get; set; } = new();
@@ -37,25 +36,29 @@ namespace FloderNavTool.ViewModels
                 var NavItem = new NavItemViewModel()
                 {
                    FolderText = FolderPath,
+                   Id = idCount++,
                 };
                 NavItems.Add(NavItem);
-               
             }
         }
         [RelayCommand]
-        private async void SearchFolderFile()
+        private async Task SearchFolderFile()
         {
-            var dialog = new OpenFolderDialog
+            // 获取当前窗口的 StorageProvider
+            var storageProvider = _mainWindow.StorageProvider;
+
+            var folder = await storageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
             {
                 Title = "选择文件夹",
-                Directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-            };
-            var result = await dialog.ShowAsync(_mainWindow);
-
-
-            if (!string.IsNullOrEmpty(result))
+                SuggestedStartLocation = await storageProvider.TryGetFolderFromPathAsync(
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
+            });
+            if (folder.Count > 0 && folder[0] != null)
             {
-                FolderPath = result;
+                // 获取文件夹路径
+                string folderPath = folder[0].Path.LocalPath;
+                // 现在你可以使用 folderPath
+                FolderPath = folderPath; // 假设你有一个绑定属性叫 FolderPath
             }
         }
     }

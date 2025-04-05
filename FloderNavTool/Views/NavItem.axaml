@@ -6,13 +6,13 @@
 			 x:DataType="vm:NavItemViewModel"
              mc:Ignorable="d" d:DesignWidth="140" d:DesignHeight="150"
              x:Class="FloderNavTool.NavItem">
-	<Border  BorderBrush="#DDDDDD" BorderThickness="2" CornerRadius="5" Width="140" Height="150">
+	<Border  BorderBrush="#DDDDDD" Background="#F5F5F5" BorderThickness="2" CornerRadius="5" Width="140" Height="150">
 		<StackPanel Width="120" Height="100">
-			<TextBlock  Margin="0,-15,0,0" FontSize="18" FontWeight="Bold">标题</TextBlock>
+			<TextBlock  Margin="0,-15,0,0" FontSize="18" FontWeight="Bold" Text="{Binding FolderName}"></TextBlock>
 			<TextBlock Margin="0 1" Width="120" Height="80" TextWrapping="Wrap" Text="{Binding FolderText}"></TextBlock>
 			<StackPanel Orientation="Horizontal" Spacing ="1">
-				<Button Content="Nav🧭" Width="60" Height="30" HorizontalAlignment="Left"/>
-				<Button Content="Set⚙️" Width="60" Height="30" HorizontalAlignment="Right"/>
+				<Button Command="{Binding NavFolderFileCommand}" Content="Nav🧭" Width="60" Height="30" HorizontalAlignment="Left"/>
+				<Button Command="{Binding SetFolderFileCommand}" Content="Set⚙️" Width="60" Height="30" HorizontalAlignment="Right"/>
 			</StackPanel>
 		</StackPanel>
 	</Border>
