@@ -5,6 +5,10 @@ using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
+using static FloderNavTool.ViewModels.SettingsWindowViewModel;
+using Avalonia.Threading;
+using System.Linq;
 namespace FloderNavTool.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -13,12 +17,29 @@ namespace FloderNavTool.ViewModels
         public MainWindowViewModel(Window mainWindow)
         {
             _mainWindow = mainWindow;
+            WeakReferenceMessenger.Default.Register<FolderDeleteMessageSetting>(this, (r, m) =>
+            {
+                if (m.IsDelected == true)
+                {
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        var itemToRemove = NavItems.FirstOrDefault(item => item.Id == m.Id);
+                        if (itemToRemove != null)
+                        {
+                            itemToRemove.Dispose(); // 先关闭子窗口
+                            NavItems.Remove(itemToRemove);
+                            itemToRemove = null;
+                        }
+                    });
+                }
+            });
         }
         private int idCount = 1;
         public int RowIndex { get; set; }
         public int ColumnIndex { get; set; }
         public ObservableCollection<NavItemViewModel> NavItems { get; set; } = new();
-
+        [ObservableProperty]
+        private int _rowCount = 2;
         [ObservableProperty]
         private string _folderPath = string.Empty; // 自动生成 FolderPath 属性
         [ObservableProperty]
@@ -26,7 +47,10 @@ namespace FloderNavTool.ViewModels
 
         [RelayCommand]
         private void AddFolderFile()
-        {
+        {   if (idCount%4 == 0)
+            {
+                RowCount++;
+            }
             if (string.IsNullOrEmpty(FolderPath))
             {
                 MyMark = "地址不能为空!!";

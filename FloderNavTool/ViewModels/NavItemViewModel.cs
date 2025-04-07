@@ -14,8 +14,8 @@ namespace FloderNavTool.ViewModels
     public partial class NavItemViewModel : ViewModelBase
     {
         public int Id { get; set; }
-        public SettingsWindowViewModel viewModel { get; set; } = new SettingsWindowViewModel();
-        public SettingsWindow settingsWindow { get; set; } = new SettingsWindow();
+        public SettingsWindowViewModel viewModel { get; set; }
+        public SettingsWindow settingsWindow { get; set; }
         public NavItemViewModel()
         {
             WeakReferenceMessenger.Default.Register<FolderSettingsChangedMessage>(this, (r, m) =>
@@ -31,6 +31,16 @@ namespace FloderNavTool.ViewModels
         public string _folderName = "未命名文件夹";
         [ObservableProperty]
         public string _folderText = string.Empty;
+
+        public void Dispose()
+        {
+            if (this.settingsWindow!= null)
+            {
+                this.settingsWindow.Close();
+                this.settingsWindow = null!;
+                this.viewModel = null!;
+            }
+        }
         [RelayCommand]
         public async Task NavFolderFile() 
         {

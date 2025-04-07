@@ -22,7 +22,7 @@
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" Spacing="20">
 			<Button  Command="{Binding ModifyNavCommand}" Content="Modify🪛"  HorizontalContentAlignment="Center" Width="110" />
-			<Button  Content="Delete🗑"  HorizontalContentAlignment="Center" Background="#F3B5BE" Width="110" />
+			<Button  Command="{Binding DeleteNavCommand}" Content="Delete🗑"  HorizontalContentAlignment="Center" Background="#F3B5BE" Width="110" />
 		</StackPanel>
 	</StackPanel>
 </Window>

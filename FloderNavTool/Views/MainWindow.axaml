@@ -12,7 +12,7 @@
 		Height="400"
 		CanResize="False"
         WindowStartupLocation="CenterScreen">
-
+	<ScrollViewer HorizontalScrollBarVisibility="Disabled">
 	<StackPanel Spacing="15">
 		<StackPanel Orientation="Horizontal" Margin="15" Spacing="15">
 			<TextBox Text="{Binding FolderPath}" Watermark="{Binding MyMark}" Width="300"></TextBox>
@@ -35,7 +35,7 @@
 			<ItemsControl ItemsSource="{Binding NavItems}" Grid.RowSpan="2" Grid.ColumnSpan="4">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
-						<UniformGrid Rows="2" Columns="4"/>
+						<UniformGrid Rows="{Binding RowCount}" Columns="4"/>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
 				<ItemsControl.ItemTemplate>
@@ -46,4 +46,5 @@
 			</ItemsControl>
 		</Grid>
 	</StackPanel>
+		</ScrollViewer>
 </Window>
