@@ -40,16 +40,23 @@ namespace FloderNavTool.ViewModels
             {
                 if (m.IsDelected == true)
                 {
-                    Dispatcher.UIThread.Post(() =>
+                    //Dispatcher.UIThread.Post(() =>
+                    //{
+                    //    var itemToRemove = NavItems.FirstOrDefault(item => item.Id == m.Id);
+                    //    if (itemToRemove != null)
+                    //    {
+                    //        itemToRemove.Dispose();
+                    //        NavItems.Remove(itemToRemove);
+                    //        SaveState();
+                    //    }
+                    //});
+                    var itemToRemove = NavItems.FirstOrDefault(item => item.Id == m.Id);
+                    if (itemToRemove != null)
                     {
-                        var itemToRemove = NavItems.FirstOrDefault(item => item.Id == m.Id);
-                        if (itemToRemove != null)
-                        {
-                            itemToRemove.Dispose();
-                            NavItems.Remove(itemToRemove);
-                            SaveState();
-                        }
-                    });
+                        itemToRemove.Dispose();
+                        NavItems.Remove(itemToRemove);
+                        SaveState();
+                    }
                 }
             });
         }
@@ -113,7 +120,8 @@ namespace FloderNavTool.ViewModels
             {
                 IdCount = idCount,
                 RowCount = RowCount,
-                NavItems = NavItems.Select(item => new NavItemState
+                NavItems = NavItems
+                .Select(item => new NavItemState
                 {
                     Id = item.Id,
                     FolderName = item.FolderName,
