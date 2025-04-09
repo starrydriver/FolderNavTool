@@ -8,6 +8,8 @@ using FloderNavTool.Views;
 using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Messaging;
 using static FloderNavTool.ViewModels.SettingsWindowViewModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FloderNavTool.ViewModels
 {
@@ -16,6 +18,7 @@ namespace FloderNavTool.ViewModels
         public int Id { get; set; }
         public SettingsWindowViewModel viewModel { get; set; }
         public SettingsWindow settingsWindow { get; set; }
+        private AppState _appState;
         public NavItemViewModel()
         {
             WeakReferenceMessenger.Default.Register<FolderSettingsChangedMessage>(this, (r, m) =>
@@ -92,6 +95,50 @@ namespace FloderNavTool.ViewModels
             };
             var desktop = App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
             await settingsWindow.ShowDialog(desktop.MainWindow);
+            // 保存状态
+            SaveState();
+        }
+        private void SaveState()
+        {
+            // 1. 加载当前存储状态
+            _appState = MainWindowViewModel._storageService.Load();
+
+            // 2. 找到匹配的项并更新
+            if (_appState.NavItems != null)
+            {
+                var itemToUpdate = _appState.NavItems.FirstOrDefault(n => n.Id == this.Id);
+                if (itemToUpdate != null)
+                {
+                    itemToUpdate.FolderName = this.FolderName;
+                    itemToUpdate.FolderText = this.FolderText; // 如果需要也更新路径
+                }
+                else
+                {
+                    // 3. 如果没有找到匹配项，添加新项
+                    _appState.NavItems.Add(new NavItemState
+                    {
+                        Id = this.Id,
+                        FolderName = this.FolderName,
+                        FolderText = this.FolderText
+                    });
+                }
+            }
+            else
+            {
+                // 4. 如果NavItems为null，初始化列表
+                _appState.NavItems = new List<NavItemState>
+        {
+            new NavItemState
+            {
+                Id = this.Id,
+                FolderName = this.FolderName,
+                FolderText = this.FolderText
+            }
+        };
+            }
+
+            // 5. 保存更新后的状态
+            MainWindowViewModel._storageService.Save(_appState);
         }
     }
 }

@@ -1,22 +1,41 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using System;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
-using static FloderNavTool.ViewModels.SettingsWindowViewModel;
 using Avalonia.Threading;
-using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Newtonsoft.Json;
+using static FloderNavTool.ViewModels.SettingsWindowViewModel;
+
 namespace FloderNavTool.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
         private readonly Window _mainWindow;
+        public static  StorageService _storageService;
+        private AppState _appState;
         public MainWindowViewModel(Window mainWindow)
         {
             _mainWindow = mainWindow;
+            _storageService = new StorageService();
+            // 加载保存的状态
+            _appState = _storageService.Load();
+            idCount = _appState.IdCount;
+            RowCount = _appState.RowCount;
+            // 初始化NavItems
+            NavItems = new ObservableCollection<NavItemViewModel>(
+                _appState.NavItems?.Select(item => new NavItemViewModel
+                {
+                    Id = item.Id,
+                    FolderText = item.FolderText,
+                    FolderName = item.FolderName
+                }) ?? new List<NavItemViewModel>());
+
             WeakReferenceMessenger.Default.Register<FolderDeleteMessageSetting>(this, (r, m) =>
             {
                 if (m.IsDelected == true)
@@ -26,65 +45,82 @@ namespace FloderNavTool.ViewModels
                         var itemToRemove = NavItems.FirstOrDefault(item => item.Id == m.Id);
                         if (itemToRemove != null)
                         {
-                            itemToRemove.Dispose(); // 先关闭子窗口
+                            itemToRemove.Dispose();
                             NavItems.Remove(itemToRemove);
-                            itemToRemove = null;
+                            SaveState();
                         }
                     });
                 }
             });
         }
-        private int idCount = 1;
+
+        private int idCount = 0;
         public int RowIndex { get; set; }
         public int ColumnIndex { get; set; }
-        public ObservableCollection<NavItemViewModel> NavItems { get; set; } = new();
+        public ObservableCollection<NavItemViewModel> NavItems { get; set; }
+
         [ObservableProperty]
         private int _rowCount = 2;
+
         [ObservableProperty]
-        private string _folderPath = string.Empty; // 自动生成 FolderPath 属性
+        private string _folderPath = string.Empty;
+
         [ObservableProperty]
-        private string _myMark = "请选择地址"; // 自动生成 IsFolderSelected 属性
+        private string _myMark = "请选择地址";
 
         [RelayCommand]
         private void AddFolderFile()
-        {   if (idCount%4 == 0)
+        {
+            if (idCount % 4 == 0)
             {
                 RowCount++;
             }
+
             if (string.IsNullOrEmpty(FolderPath))
             {
                 MyMark = "地址不能为空!!";
             }
             else
             {
-                var NavItem = new NavItemViewModel()
+                var navItem = new NavItemViewModel()
                 {
-                   FolderText = FolderPath,
-                   Id = idCount++,
+                    FolderText = FolderPath,
+                    Id = idCount++,
                 };
-                NavItems.Add(NavItem);
+                NavItems.Add(navItem);
+                SaveState();
             }
         }
         [RelayCommand]
         private async Task SearchFolderFile()
         {
-            // 获取当前窗口的 StorageProvider
             var storageProvider = _mainWindow.StorageProvider;
-
             var folder = await storageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
             {
                 Title = "选择文件夹",
                 SuggestedStartLocation = await storageProvider.TryGetFolderFromPathAsync(
                     Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
             });
+
             if (folder.Count > 0 && folder[0] != null)
             {
-                // 获取文件夹路径
-                string folderPath = folder[0].Path.LocalPath;
-                // 现在你可以使用 folderPath
-                FolderPath = folderPath; // 假设你有一个绑定属性叫 FolderPath
+                FolderPath = folder[0].Path.LocalPath;
             }
         }
+        private void SaveState()
+        {
+            _appState = new AppState
+            {
+                IdCount = idCount,
+                RowCount = RowCount,
+                NavItems = NavItems.Select(item => new NavItemState
+                {
+                    Id = item.Id,
+                    FolderName = item.FolderName,
+                    FolderText = item.FolderText
+                }).ToList()
+            };
+            _storageService.Save(_appState);
+        }
     }
-        
 }

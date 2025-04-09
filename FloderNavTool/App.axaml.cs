@@ -33,8 +33,8 @@ namespace FloderNavTool
             }
 
             base.OnFrameworkInitializationCompleted();
+            var storageService = new StorageService();
         }
-
         private void DisableAvaloniaDataAnnotationValidation()
         {
             // Get an array of plugins to remove
