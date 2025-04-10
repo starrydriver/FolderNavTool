@@ -15,7 +15,7 @@ namespace FloderNavTool
         [STAThread]
         public static void Main(string[] args)
         {
-            AllocConsole(); // 显示控制台
+            //AllocConsole(); // 显示控制台
             BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
         }

@@ -57,6 +57,8 @@ namespace FloderNavTool.ViewModels
                         NavItems.Remove(itemToRemove);
                         SaveState();
                     }
+                    //更新滑动条
+                    RowCount = NavItems.Count / 4 + 1;
                 }
             });
         }
@@ -78,10 +80,6 @@ namespace FloderNavTool.ViewModels
         [RelayCommand]
         private void AddFolderFile()
         {
-            if (idCount % 4 == 0)
-            {
-                RowCount++;
-            }
 
             if (string.IsNullOrEmpty(FolderPath))
             {
@@ -97,6 +95,8 @@ namespace FloderNavTool.ViewModels
                 NavItems.Add(navItem);
                 SaveState();
             }
+            //更新滑动条
+            RowCount = NavItems.Count / 4 + 1;
         }
         [RelayCommand]
         private async Task SearchFolderFile()
